@@ -1,0 +1,58 @@
+Types
+
+user
+  id
+  user_id
+  posts
+  created_ts
+  modified_ts
+
+post
+  id
+  user
+  title
+  post_content
+  image_url
+  comments
+  created_ts
+  modified_ts
+
+comment
+  id
+  user
+  comment_content
+  image_url
+  created_ts
+  modified_ts
+
+Queries
+
+get_posts
+get_post_full
+
+Mutations
+
+add_post
+add_comment
+
+
+
+import {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLInputObjectType,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLID,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLBoolean,
+} from 'graphql';
+import {
+  globalIdField,
+  connectionDefinitions,
+  connectionFromPromisedArray,
+  connectionArgs,
+  mutationWithClientMutationId,
+} from 'graphql-relay';
+
