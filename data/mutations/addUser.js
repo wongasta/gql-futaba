@@ -7,12 +7,11 @@ const {
   GraphQLString, GraphQLInt,
   GraphQLBoolean,
 } = require('graphql');
-const { getVideoById, getVideos, createVideo } = require('./src/data');
 const {
   mutationWithClientMutationId,
 } = require('graphql-relay');
-import {userType} from "../node";
-import {dbAddUser, getUserById} from "../database";
+import {userType} from "../node.js";
+import {dbAddUser, getUserById} from "../database.js";
 
 export const addUser = mutationWithClientMutationId({
   name: 'addUser',
