@@ -8,13 +8,15 @@ import {
 } from 'graphql';
 import {getPostById, getPosts} from '../database.js';
 import { postType } from "../node.js";
+import {fromGlobalId, globalIdField} from "graphql-relay";
 
 export const postQuery = {
   type: postType,
   args: {
-    id: { type: GraphQLNonNull(GraphQLID) }
+    id: globalIdField()
   },
   resolve: (_, args)=>{
-    return getPostById(args.id);
+    const { id:PostId }=fromGlobalId(args.id);
+    return getPostById(PostId);
   }
 }

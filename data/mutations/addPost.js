@@ -1,4 +1,4 @@
-const {
+import {
   GraphQLObjectType,
   GraphQLInputObjectType,
   GraphQLList,
@@ -6,29 +6,31 @@ const {
   GraphQLID,
   GraphQLString, GraphQLInt,
   GraphQLBoolean,
-} = require('graphql');
-const {
+} from 'graphql';
+import {
   globalIdField,
   mutationWithClientMutationId,
-} = require('graphql-relay');
+} from 'graphql-relay';
 import {postType} from "../node.js";
 import {dbAddPost, getPostById} from "../database.js";
 
 export const addPost = mutationWithClientMutationId({
   name: 'addPost',
   outputFields: {
-    user: { type: postType }
+    post: { type: postType }
   },
   inputFields: {
-    user: globalIdField(),
-    title: GraphQLNonNull(GraphQLString),
-    post_content: GraphQLNonNull(GraphQLString),
-    image_url: GraphQLString
+    user: {type: GraphQLNonNull(GraphQLID)},
+    title: {type:GraphQLNonNull(GraphQLString)},
+    post_content: {type:GraphQLNonNull(GraphQLString)},
+    image_url: {type:GraphQLString}
   },
   mutateAndGetPayload: (args)=>{
     return new Promise(async (resolve, reject)=>{
       const postId = await dbAddPost(args);
-      resolve(getPostById(postId));
+      resolve({
+        post: getPostById(postId)
+      });
     });
   }
 })

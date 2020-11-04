@@ -3,13 +3,14 @@ import {
   fromGlobalId,
   toGlobalId
 } from 'graphql-relay';
+import _ from 'lodash';
 import moment from 'moment';
 
 const getCurrentTS=()=>moment().unix();
 
-const Store = new DataStore('./data');
+const Store = new DataStore('./data/db');
 const Collection = {
-  authors: Store.collection('authors'),
+  users: Store.collection('users'),
   posts: Store.collection('posts'),
   comments: Store.collection('comments')
 }
@@ -20,62 +21,59 @@ const transformId=(type,id)=>toGlobalId(type,id);
 
 export const getPostById = (id) =>{
   return new Promise((resolve,reject)=> {
-    let Post = Store.posts.get(id);
-    Post['user_id'] = Post.id;
-    Post['id'] = transformId('User', Post.id);
+    let Post = _.cloneDeep(Collection.posts.get(id));
     resolve(Post);
   });
 }
 export const getUserById = (id) =>{
   return new Promise((resolve,reject)=> {
-    let User = Store.users.get(id);
-    User['id'] = transformId('Post', User.id);
+    let User = _.cloneDeep(Collection.users.get(id));
+    User['user_id'] = User.id;
     resolve(User);
   });
 }
 export const getCommentById = (id) => {
   return new Promise((resolve,reject)=> {
-    let Comment = Store.comments.get(id);
-    Comment['id'] = transformId('Comment', Comment.id);
+    let Comment = _.cloneDeep(Collection.comments.get(id));
     resolve(Comment);
   });
 }
 
 export const getPosts = ({first,last,before,after}) =>{
   return new Promise((resolve,reject)=>{
-    let posts=Store.posts.list();
+    let posts=_.cloneDeep(Collection.posts.list());
     posts=posts.map((post)=>{
-      post['id']=transformId('Post',post.id);
+      post.user=toGlobalId('User',post.user);
       return post;
-    });
+    })
     resolve(posts);
   });
 }
 export const getUsers = ({first,last,before,after}) =>{
   return new Promise((resolve,reject)=>{
-    let users=Store.users.list();
+    let users=_.cloneDeep(Collection.users.list());
     users=users.map((user)=>{
-      user['user_id']=user['id'];
-      user['id']=transformId('User',user.id);
+      user.user_id=user.id;
       return user;
     })
     resolve(users);
   });
 }
-export const getComments = ({first,last,before,after}) =>{
+export const getCommentsByPostId = ({id:postId}) =>{
   return new Promise((resolve,reject)=>{
-    let comments=Store.comments.list();
+    let comments=_.cloneDeep(Collection.comments.list()).filter((comment)=>comment.post===postId);
     comments=comments.map((comment)=>{
-      comment['id']=transformId('Comment',comment.id);
+      comment.user=toGlobalId('User',comment.user);
+      comment.post=toGlobalId('Post',comment.post);
       return comment;
-    });
+    })
     resolve(comments);
   });
 }
 
 export const dbAddUser = () =>{
   return new Promise((resolve,reject)=>{
-    resolve(Store.user.create({
+    resolve(Collection.users.create({
       created_ts: getCurrentTS(),
       modified_ts: getCurrentTS()
     }));
@@ -85,7 +83,7 @@ export const dbAddUser = () =>{
 export const dbAddPost = ({user, title, post_content, image_url}) =>{
   const { id: userId }=fromGlobalId(user);
   return new Promise((resolve,reject)=>{
-    resolve(Store.posts.create({
+    resolve(Collection.posts.create({
       user: userId,
       title: title,
       post_content: post_content,
@@ -100,7 +98,7 @@ export const dbAddComment = ({user, post, comment_content, image_url}) =>{
   const { id: userId }=fromGlobalId(user);
   const { id: postId }=fromGlobalId(post);
   return new Promise((resolve,reject)=>{
-    resolve(Store.posts.create({
+    resolve(Collection.comments.create({
       user: userId,
       post: postId,
       comment_content: comment_content,

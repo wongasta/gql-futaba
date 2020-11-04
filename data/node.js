@@ -15,15 +15,15 @@ import {
   connectionDefinitions,
   connectionArgs, connectionFromPromisedArray,
 } from 'graphql-relay';
-import {getUserById, getPostById, getCommentById, getComments, getPosts} from './database.js';
+import {getUserById, getPostById, getCommentById, getCommentsByPostId, getPosts} from './database.js';
 
-const getObjectById=(type,id)=>{
+const getObjectById=async (type,id)=>{
   const retriever = {
     user: getUserById,
     post: getPostById,
     comment: getCommentById
   };
-  return retriever[type](id);
+  return await retriever[type](id);
 }
 
 export const { nodeInterface, nodeField } = nodeDefinitions(
@@ -44,8 +44,8 @@ export const commentType = new GraphQLObjectType({
   description: 'Futaba comment',
   fields: {
     id: globalIdField(),
-    user: globalIdField(),
-    post: globalIdField(),
+    user: { type: GraphQLID },
+    post: { type: GraphQLID },
     comment_content: { type: GraphQLString },
     image_url: { type: GraphQLString },
     created_ts: { type: GraphQLInt },
@@ -59,14 +59,14 @@ export const postType = new GraphQLObjectType({
   description: 'Futaba post',
   fields: {
     id: globalIdField(),
-    user: globalIdField(),
+    user: { type: GraphQLID },
     title: { type: GraphQLString },
     post_content: { type: GraphQLString },
     image_url: { type: GraphQLString },
     comments: {
       type: new GraphQLList(commentType),
-      resolve: (_)=>{
-        return getComments();
+      resolve: (source)=>{
+        return getCommentsByPostId(source);
       }
     },
     created_ts: { type: GraphQLInt },

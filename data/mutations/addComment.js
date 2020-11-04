@@ -1,4 +1,4 @@
-const {
+import {
   GraphQLObjectType,
   GraphQLInputObjectType,
   GraphQLList,
@@ -6,29 +6,31 @@ const {
   GraphQLID,
   GraphQLString, GraphQLInt,
   GraphQLBoolean,
-} = require('graphql');
-const {
+} from 'graphql';
+import {
   globalIdField,
   mutationWithClientMutationId,
-} = require('graphql-relay');
+} from 'graphql-relay';
 import {commentType} from "../node.js";
-import {dbAddComment, getComments} from "../database.js";
+import {dbAddComment, getCommentById} from "../database.js";
 
 export const addComment = mutationWithClientMutationId({
-  name: 'addPost',
+  name: 'addComment',
   outputFields: {
-    user: { type: commentType }
+    comment: { type: commentType }
   },
   inputFields: {
-    user: globalIdField(),
-    post: globalIdField(),
-    comment_content: GraphQLNonNull(GraphQLString),
-    image_url: GraphQLString
+    user: {type: GraphQLNonNull(GraphQLID)},
+    post: {type: GraphQLNonNull(GraphQLID)},
+    comment_content: {type: GraphQLNonNull(GraphQLString)},
+    image_url: {type: GraphQLString}
   },
   mutateAndGetPayload: (args)=>{
     return new Promise(async (resolve, reject)=>{
       const postId = await dbAddComment(args);
-      resolve(getComments(postId));
+      resolve({
+        comment: getCommentById(postId)
+      });
     });
   }
 })

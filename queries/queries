@@ -1,0 +1,130 @@
+mutation addUser{
+  add_user{
+    id
+    user_id
+    created_ts
+    modified_ts
+  }
+}
+
+mutation addPost($input: addPostInput!){
+  add_post(input:$input){
+    post{
+      id
+      title
+      post_content
+    }
+  }
+}
+{
+  "input":{
+    "user": "VXNlcjpCSl85cHFnWUQ=",
+    "title": "post test",
+    "post_content": "what is up"
+  }
+}
+
+mutation addComment($input: addCommentInput!){
+  add_comment(input:$input){
+    comment{
+      id
+      user
+      post
+      comment_content
+      image_url
+    }
+  }
+}
+{
+  "input":{
+    "user": "VXNlcjpCSl85cHFnWUQ=",
+    "post": "UG9zdDpCMTRzYTVsWXc=",
+    "comment_content": "post reply",
+    "image_url": "https://www.computerhope.com/jargon/r/random-dice.jpg"
+  }
+}
+
+query getPost{
+  post(id: "UG9zdDpCMTRzYTVsWXc="){
+    id
+    user
+    title
+    post_content
+    image_url
+    comments {
+      id
+      user
+      post
+      comment_content
+      image_url
+    }
+  }
+}
+
+query getUser{
+  user(id: "VXNlcjpCSl85cHFnWUQ="){
+    id
+    user_id
+    posts{
+      edges{
+        node{
+          id
+          user
+          title
+          post_content
+          image_url
+          comments {
+            id
+            user
+            post
+            comment_content
+            image_url
+          }
+        }
+      }
+    }
+  }
+}
+
+query getPosts{
+  posts(first: 3){
+    edges{
+      node{
+        id
+        user
+        title
+        post_content
+        image_url
+        comments {
+          id
+          user
+          post
+          comment_content
+          image_url
+        }
+      }
+    }
+  }
+}
+
+query getNode{
+  node(id: "Q29tbWVudDpTeXgtR2lsS0Q="){
+    __typename
+    id
+    ...on User{
+      user_id
+    }
+    ...on Post{
+      user
+      title
+      post_content
+      image_url
+    }
+    ...on Comment{
+      user
+      post
+      comment_content
+      image_url
+    }
+  }
+}

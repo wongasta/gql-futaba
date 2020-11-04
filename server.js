@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 const server = express();
 
 server.use('/graphql', graphqlHTTP({
-  gqlSchema,
+  schema: gqlSchema,
   graphiql: true,
 }));
 

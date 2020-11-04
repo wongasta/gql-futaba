@@ -8,6 +8,7 @@ import {
 } from 'graphql';
 import {
   fromGlobalId,
+  globalIdField
 } from 'graphql-relay';
 import {getPostById, getPosts, getUserById} from '../database.js';
 import { userType } from "../node.js";
@@ -15,11 +16,11 @@ import { userType } from "../node.js";
 export const userQuery = {
   type: userType,
   args: {
-    id: { type: GraphQLNonNull(GraphQLID) }
+    id: globalIdField()
   },
-  resolve: (_, args)=>{
-    const User=getUserById(args.id);
-    const { id:UserId }=fromGlobalId(User.id);
+  resolve: async (_, args)=>{
+    const { id:UserId }=fromGlobalId(args.id);
+    const User=await getUserById(UserId);
     User.user_id=UserId;
     return User;
   }
