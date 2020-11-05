@@ -75,7 +75,7 @@ export const postType = new GraphQLObjectType({
   interfaces: [nodeInterface]
 });
 
-export const { connectionType: PostsConnection } = connectionDefinitions({
+export const { connectionType: PostConnection } = connectionDefinitions({
   nodeType: postType,
   connectionFields: ()=>({
     totalCount: {
@@ -92,11 +92,11 @@ export const userType = new GraphQLObjectType({
   description: 'Futaba user',
   fields: {
     id: globalIdField(),
-    user_id: { type: GraphQLString },
+    user_id: { type: GraphQLID },
     created_ts: { type: GraphQLInt },
     modified_ts: { type: GraphQLInt },
     posts: {
-      type: PostsConnection,
+      type: PostConnection,
       args: connectionArgs,
       resolve: (_, args)=>{
         return connectionFromPromisedArray(getPosts(args),args);

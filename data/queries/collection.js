@@ -7,7 +7,7 @@ import { postQuery } from './post.js';
 import { userQuery } from "./user.js";
 
 export default new GraphQLObjectType({
-  name: 'QueryType',
+  name: 'Query',
   description: 'Root query type',
   fields: {
     node: nodeField,

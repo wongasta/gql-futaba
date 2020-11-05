@@ -2,7 +2,6 @@
   "name": "gpl-futaba",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.1",
@@ -18,14 +17,25 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-relay": "^10.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "web-vitals": "^0.2.4"
+  },
+  "devDependencies": {
+    "babel-plugin-relay": "^10.0.1",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-flow": "^7.12.1",
+    "flow-bin": "^0.137.0",
+    "relay-compiler": "^10.0.1",
+    "relay-config": "^10.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "relay": "relay-compiler --src ./src --schema ./data/schema.graphql --extensions js jsx",
     "flow": "flow"
   },
   "eslintConfig": {
@@ -45,12 +55,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/preset-flow": "^7.12.1",
-    "flow-bin": "^0.137.0"
   },
   "proxy": "http://localhost:4000"
 }

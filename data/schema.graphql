@@ -1,0 +1,77 @@
+interface Node {
+  id: ID!
+}
+
+type User implements Node {
+  id: ID!
+  user_id: ID!
+  posts: [Post]
+  created_ts: Int!
+  modified_ts: Int!
+}
+
+type Post implements Node {
+  id: ID!
+  user: ID!
+  title: String!
+  post_content: String!
+  image_url: String
+  comments: [Comment],
+  created_ts: Int!
+  modified_ts: Int!
+}
+
+type Comment implements Node {
+  id: ID!
+  user: ID!
+  post: ID!
+  comment_content: String!
+  image_url: String
+  created_ts: Int!
+  modified_ts: Int!
+}
+
+type PostConnection {
+  edges: [PostEdge]
+}
+
+type PostEdge {
+  node: Post
+  cursor: String!
+}
+
+type Query {
+  node(id: ID!): Node
+  posts(before: String, after: String, first: Int, last: Int): PostConnection
+  post(id: ID!): Post
+  user(id: ID!): User
+}
+
+type Mutation {
+  add_user: User
+  add_post(input: addPostInput): addPostPayload
+  add_comment(input: addCommentInput): addCommentPayload
+}
+
+input addPostInput {
+  user: ID!
+  title: String!
+  post_content: String!
+  image_url: String
+}
+
+type addPostPayload {
+  post: Post
+}
+
+input addCommentInput {
+  user: ID!
+  post: ID!
+  comment_content: String!
+  image_url: String
+}
+
+type addCommentPayload {
+  post: Post
+  comment: Comment
+}

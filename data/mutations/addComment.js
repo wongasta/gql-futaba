@@ -8,15 +8,17 @@ import {
   GraphQLBoolean,
 } from 'graphql';
 import {
+  fromGlobalId,
   globalIdField,
   mutationWithClientMutationId,
 } from 'graphql-relay';
-import {commentType} from "../node.js";
-import {dbAddComment, getCommentById} from "../database.js";
+import {commentType, postType} from "../node.js";
+import {dbAddComment, getPostById, getCommentById} from "../database.js";
 
 export const addComment = mutationWithClientMutationId({
   name: 'addComment',
   outputFields: {
+    post: { type: postType },
     comment: { type: commentType }
   },
   inputFields: {
@@ -27,9 +29,11 @@ export const addComment = mutationWithClientMutationId({
   },
   mutateAndGetPayload: (args)=>{
     return new Promise(async (resolve, reject)=>{
-      const postId = await dbAddComment(args);
+      const commentId = await dbAddComment(args);
+      const { id: postId }=fromGlobalId(args.post);
       resolve({
-        comment: getCommentById(postId)
+        post: getPostById(postId),
+        comment: getCommentById(commentId)
       });
     });
   }

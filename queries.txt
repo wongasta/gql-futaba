@@ -16,16 +16,23 @@ mutation addPost($input: addPostInput!){
     }
   }
 }
-{
-  "input":{
-    "user": "VXNlcjpCSl85cHFnWUQ=",
-    "title": "post test",
-    "post_content": "what is up"
-  }
-}
 
 mutation addComment($input: addCommentInput!){
   add_comment(input:$input){
+    post{
+      id
+      user
+      title
+      post_content
+      image_url
+      comments {
+        id
+        user
+        post
+        comment_content
+        image_url
+      }
+    }
     comment{
       id
       user
@@ -33,14 +40,6 @@ mutation addComment($input: addCommentInput!){
       comment_content
       image_url
     }
-  }
-}
-{
-  "input":{
-    "user": "VXNlcjpCSl85cHFnWUQ=",
-    "post": "UG9zdDpCMTRzYTVsWXc=",
-    "comment_content": "post reply",
-    "image_url": "https://www.computerhope.com/jargon/r/random-dice.jpg"
   }
 }
 
@@ -87,7 +86,7 @@ query getUser{
 }
 
 query getPosts{
-  posts(first: 3){
+  posts(first: 2){
     edges{
       node{
         id

@@ -13,10 +13,10 @@ import {
   connectionArgs,
 } from 'graphql-relay';
 import { getPosts } from '../database.js';
-import { PostsConnection } from "../node.js";
+import { PostConnection } from "../node.js";
 
 export const postsQuery = {
-  type: PostsConnection,
+  type: PostConnection,
   args: connectionArgs,
   resolve: (_, args)=>{
     return connectionFromPromisedArray(getPosts(args),args);
