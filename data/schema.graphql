@@ -20,6 +20,7 @@ type User implements Node {
 type Post implements Node {
   id: ID!
   user: ID!
+  user_id: ID!
   title: String!
   post_content: String!
   image_url: String

@@ -1,0 +1,19 @@
+.header{
+  text-align: center;
+  margin: 20px 0;
+  border-bottom: 1px solid gray;
+}
+
+.logo{
+  width: 280px;
+  height: auto;
+  border: 1px solid black;
+  padding: 10px;
+  background: beige;
+}
+
+.text{
+  font-size: 28px;
+  color: #af0a0f;
+  margin: 10px 0;
+}

@@ -16,7 +16,7 @@ import {
   connectionArgs,
   connectionFromPromisedArray,
 } from 'graphql-relay';
-import {getUserById, getPostById, getCommentById, getCommentsByPostId, getPosts} from './database.js';
+import {getUserById, getPostById, getCommentById, getCommentsByPostId, getPosts, getPostsCount} from './database.js';
 
 const getObjectById=async (type,id)=>{
   const retriever = {
@@ -26,15 +26,6 @@ const getObjectById=async (type,id)=>{
   };
   return await retriever[type](id);
 }
-
-const AdditionalPageInfo = {
-  totalCount: {
-    type: GraphQLInt,
-    resolve: (conn)=>{
-      return conn.edges.length
-    }
-  }
-};
 
 export const { nodeInterface, nodeField } = nodeDefinitions(
   (globalId)=>{
@@ -66,7 +57,14 @@ export const commentType = new GraphQLObjectType({
 
 export const { connectionType: CommentConnection, edgeType: CommentEdge } = connectionDefinitions({
   nodeType: commentType,
-  connectionFields: ()=>(AdditionalPageInfo)
+  connectionFields: ()=>({
+    totalCount: {
+      type: GraphQLInt,
+      resolve: (conn)=>{
+        return conn.edges.length
+      }
+    }
+  })
 });
 
 export const postType = new GraphQLObjectType({
@@ -75,6 +73,7 @@ export const postType = new GraphQLObjectType({
   fields: {
     id: globalIdField(),
     user: { type: GraphQLID },
+    user_id: { type: GraphQLID },
     title: { type: GraphQLString },
     post_content: { type: GraphQLString },
     image_url: { type: GraphQLString },
@@ -93,7 +92,13 @@ export const postType = new GraphQLObjectType({
 
 export const { connectionType: PostConnection, edgeType: PostEdge } = connectionDefinitions({
   nodeType: postType,
-  connectionFields: ()=>(AdditionalPageInfo)
+  connectionFields: ()=>({
+    totalCount: {
+      type: GraphQLInt,
+      resolve: async (conn)=>{
+        return await getPostsCount();
+      }
+    }})
 });
 
 export const userType = new GraphQLObjectType({

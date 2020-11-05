@@ -22,6 +22,8 @@ const transformId=(type,id)=>toGlobalId(type,id);
 export const getPostById = (id) =>{
   return new Promise((resolve,reject)=> {
     let Post = _.cloneDeep(Collection.posts.get(id));
+    Post.user_id=Post.user;
+    Post.user=toGlobalId('User',Post.user);
     resolve(Post);
   });
 }
@@ -39,10 +41,11 @@ export const getCommentById = (id) => {
   });
 }
 
-export const getPosts = ({first,last,before,after}) =>{
+export const getPosts = ({first,last,before,after}) => {
   return new Promise((resolve,reject)=>{
     let posts=_.cloneDeep(Collection.posts.list());
     posts=posts.map((post)=>{
+      post.user_id=post.user;
       post.user=toGlobalId('User',post.user);
       return post;
     })
@@ -50,7 +53,13 @@ export const getPosts = ({first,last,before,after}) =>{
   });
 }
 
-export const getUsers = ({first,last,before,after}) =>{
+export const getPostsCount = ()=>{
+  return new Promise((resolve,reject)=>{
+    resolve(Collection.posts.list().length);
+  });
+}
+
+export const getUsers = ({first,last,before,after}) => {
   return new Promise((resolve,reject)=>{
     let users=_.cloneDeep(Collection.users.list());
     users=users.map((user)=>{
@@ -61,7 +70,7 @@ export const getUsers = ({first,last,before,after}) =>{
   });
 }
 
-export const getCommentsByPostId = ({id:postId}) =>{
+export const getCommentsByPostId = ({id:postId}) => {
   return new Promise((resolve,reject)=>{
     let comments=_.cloneDeep(Collection.comments.list()).filter((comment)=>comment.post===postId);
     comments=comments.map((comment)=>{
@@ -74,7 +83,7 @@ export const getCommentsByPostId = ({id:postId}) =>{
 }
 
 export const dbAddUser = () =>{
-  return new Promise((resolve,reject)=>{
+  return new Promise((resolve,reject)=> {
     resolve(Collection.users.create({
       created_ts: getCurrentTS(),
       modified_ts: getCurrentTS()
@@ -82,7 +91,7 @@ export const dbAddUser = () =>{
   });
 }
 
-export const dbAddPost = ({user, title, post_content, image_url}) =>{
+export const dbAddPost = ({user, title, post_content, image_url}) => {
   const { id: userId }=fromGlobalId(user);
   return new Promise((resolve,reject)=>{
     resolve(Collection.posts.create({
@@ -96,7 +105,7 @@ export const dbAddPost = ({user, title, post_content, image_url}) =>{
   });
 }
 
-export const dbAddComment = ({user, post, comment_content, image_url}) =>{
+export const dbAddComment = ({user, post, comment_content, image_url}) => {
   const { id: userId }=fromGlobalId(user);
   const { id: postId }=fromGlobalId(post);
   return new Promise((resolve,reject)=>{

@@ -1,3 +1,21 @@
+{
+  "input": {
+    "user": "VXNlcjpTMUZHQzVnS0Q=",
+    "title": "Shit posting",
+    "post_content": "king of shit posting",
+    "image_url": "https://www.computerhope.com/jargon/r/random-dice.jpg"
+  }
+}
+
+{
+  "input": {
+    "user": "VXNlcjpTMUZHQzVnS0Q=",
+    "post": "UG9zdDpTMUZHQzVnS0Q=",
+    "comment_content": "return right stuff x2",
+    "image_url": "https://www.computerhope.com/jargon/r/random-dice.jpg"
+  }
+}
+
 mutation addUser{
   add_user{
     id
