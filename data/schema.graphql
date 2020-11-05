@@ -2,6 +2,13 @@ interface Node {
   id: ID!
 }
 
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
 type User implements Node {
   id: ID!
   user_id: ID!
@@ -16,9 +23,20 @@ type Post implements Node {
   title: String!
   post_content: String!
   image_url: String
-  comments: [Comment],
+  comments(before: String, after: String, first: Int, last: Int): CommentConnection,
   created_ts: Int!
   modified_ts: Int!
+}
+
+type CommentConnection {
+  edges: [CommentEdge]
+  totalCount: Int
+  pageInfo: PageInfo!
+}
+
+type CommentEdge {
+  node: Comment
+  cursor: String!
 }
 
 type Comment implements Node {
@@ -33,6 +51,8 @@ type Comment implements Node {
 
 type PostConnection {
   edges: [PostEdge]
+  totalCount: Int
+  pageInfo: PageInfo!
 }
 
 type PostEdge {

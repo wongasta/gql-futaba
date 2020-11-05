@@ -56,3 +56,6 @@ import {
   mutationWithClientMutationId,
 } from 'graphql-relay';
 
+IMPORTANT LESSONS:
+
+For connection object in Relay, if you want to customize cursor, pagination, etc - do NOT use connectionFromArray. Instead implement resolver function yourself.

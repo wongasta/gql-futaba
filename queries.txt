@@ -25,12 +25,17 @@ mutation addComment($input: addCommentInput!){
       title
       post_content
       image_url
-      comments {
-        id
-        user
-        post
-        comment_content
-        image_url
+      comments{
+        edges{
+          cursor
+          node{
+            id
+            user
+            post
+            comment_content
+            image_url
+          }
+        }
       }
     }
     comment{
@@ -50,12 +55,17 @@ query getPost{
     title
     post_content
     image_url
-    comments {
-      id
-      user
-      post
-      comment_content
-      image_url
+    comments{
+      edges{
+        cursor
+        node{
+          id
+          user
+          post
+          comment_content
+          image_url
+        }
+      }
     }
   }
 }
@@ -66,21 +76,16 @@ query getUser{
     user_id
     posts{
       edges{
+        cursor
         node{
           id
           user
           title
           post_content
           image_url
-          comments {
-            id
-            user
-            post
-            comment_content
-            image_url
-          }
         }
       }
+      totalCount
     }
   }
 }
@@ -88,20 +93,34 @@ query getUser{
 query getPosts{
   posts(first: 2){
     edges{
+      cursor
       node{
         id
         user
         title
         post_content
         image_url
-        comments {
-          id
-          user
-          post
-          comment_content
-          image_url
+        comments{
+          edges{
+          	cursor
+            node{
+              id
+              user
+              post
+              comment_content
+              image_url
+            }
+          }
+          totalCount
         }
       }
+    }
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
     }
   }
 }

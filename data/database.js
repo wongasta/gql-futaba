@@ -49,6 +49,7 @@ export const getPosts = ({first,last,before,after}) =>{
     resolve(posts);
   });
 }
+
 export const getUsers = ({first,last,before,after}) =>{
   return new Promise((resolve,reject)=>{
     let users=_.cloneDeep(Collection.users.list());
@@ -59,6 +60,7 @@ export const getUsers = ({first,last,before,after}) =>{
     resolve(users);
   });
 }
+
 export const getCommentsByPostId = ({id:postId}) =>{
   return new Promise((resolve,reject)=>{
     let comments=_.cloneDeep(Collection.comments.list()).filter((comment)=>comment.post===postId);
