@@ -27,9 +27,10 @@ export const addPost = mutationWithClientMutationId({
   },
   mutateAndGetPayload: (args)=>{
     return new Promise(async (resolve, reject)=>{
-      const postId = await dbAddPost(args);
+      const result = await dbAddPost(args);
+      if((result instanceof Error)) return resolve(result);
       resolve({
-        post: getPostById(postId)
+        post: getPostById(result)
       });
     });
   }

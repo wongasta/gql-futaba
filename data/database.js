@@ -17,11 +17,11 @@ const Collection = {
 
 export default Collection;
 
-const transformId=(type,id)=>toGlobalId(type,id);
-
 export const getPostById = (id) =>{
   return new Promise((resolve,reject)=> {
-    let Post = _.cloneDeep(Collection.posts.get(id));
+    const FoundPost = Collection.posts.get(id);
+    if(!FoundPost) return resolve(null);
+    let Post = _.cloneDeep(FoundPost);
     Post.user_id=Post.user;
     Post.user=toGlobalId('User',Post.user);
     resolve(Post);
@@ -29,8 +29,10 @@ export const getPostById = (id) =>{
 }
 export const getUserById = (id) =>{
   return new Promise((resolve,reject)=> {
-    let User = _.cloneDeep(Collection.users.get(id));
-    User['user_id'] = User.id;
+    const FoundUser = Collection.users.get(id);
+    if(!FoundUser) return resolve(null);
+    let User = _.cloneDeep(FoundUser);
+    User.user_id = User.id;
     resolve(User);
   });
 }
@@ -74,6 +76,7 @@ export const getCommentsByPostId = ({id:postId}) => {
   return new Promise((resolve,reject)=>{
     let comments=_.cloneDeep(Collection.comments.list()).filter((comment)=>comment.post===postId);
     comments=comments.map((comment)=>{
+      comment.user_id=comment.user;
       comment.user=toGlobalId('User',comment.user);
       comment.post=toGlobalId('Post',comment.post);
       return comment;
@@ -91,8 +94,10 @@ export const dbAddUser = () =>{
   });
 }
 
-export const dbAddPost = ({user, title, post_content, image_url}) => {
+export const dbAddPost = async ({user, title, post_content, image_url}) => {
   const { id: userId }=fromGlobalId(user);
+  const foundUser = await getUserById(userId);
+  if(!foundUser) return new Error("Invalid user id");
   return new Promise((resolve,reject)=>{
     resolve(Collection.posts.create({
       user: userId,
@@ -105,9 +110,13 @@ export const dbAddPost = ({user, title, post_content, image_url}) => {
   });
 }
 
-export const dbAddComment = ({user, post, comment_content, image_url}) => {
+export const dbAddComment = async ({user, post, comment_content, image_url}) => {
   const { id: userId }=fromGlobalId(user);
   const { id: postId }=fromGlobalId(post);
+  const foundUser = await getUserById(userId);
+  if(!foundUser) return new Error("Invalid user id");
+  const foundPost = await getPostById(postId);
+  if(!foundPost) return new Error("Invalid post id");
   return new Promise((resolve,reject)=>{
     resolve(Collection.comments.create({
       user: userId,

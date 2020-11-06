@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import {useParams} from "react-router-dom";
 import {QueryRenderer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import Environment from '../../util/relay-env';
+import Environment from '../../util/relayEnv';
 import styles from './PostContainer.module.css';
-import PostPreview from "./PostPreview";
+import PostContainer from "../post/PostContainer";
 
 const POSTS_PER_PAGE=5;
 
@@ -20,15 +20,17 @@ function PostsContainer(props){
   }else{
     variables={last: POSTS_PER_PAGE,before:currentPage.cursor}
   }
+  variables.comments_count=3;
   return(
     <QueryRenderer
       environment={Environment}
       query={graphql`
-        query PostsContainerQuery($before: String, $after: String, $first: Int){
+        query PostsContainerQuery($before: String, $after: String, $first: Int, $comments_count: Int){
           posts(before: $before, after: $after, first: $first){
             edges{
+            cursor
               node{
-                ...PostPreview_post
+                ...PostContainer_post
               }
             }
             pageInfo{
@@ -47,7 +49,7 @@ function PostsContainer(props){
         return (
           <div className={styles.postContainer}>
             {props.posts.edges.map((edge)=>
-              <PostPreview key={edge.cursor} post={edge.node} />
+              <PostContainer isPost={false} key={edge.cursor} post={edge.node} />
             )}
           </div>
         )

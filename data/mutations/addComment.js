@@ -29,11 +29,12 @@ export const addComment = mutationWithClientMutationId({
   },
   mutateAndGetPayload: (args)=>{
     return new Promise(async (resolve, reject)=>{
-      const commentId = await dbAddComment(args);
+      const result = await dbAddComment(args);
+      if(result instanceof Error) return resolve(result);
       const { id: postId }=fromGlobalId(args.post);
       resolve({
         post: getPostById(postId),
-        comment: getCommentById(commentId)
+        comment: getCommentById(result)
       });
     });
   }

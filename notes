@@ -59,3 +59,4 @@ import {
 IMPORTANT LESSONS:
 
 For connection object in Relay, if you want to customize cursor, pagination, etc - do NOT use connectionFromArray. Instead implement resolver function yourself.
+When throwing error in mutateAndGetPayload just RESOLVE ERROR OBJECT. DO NOT THROW.

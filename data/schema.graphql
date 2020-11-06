@@ -43,6 +43,7 @@ type CommentEdge {
 type Comment implements Node {
   id: ID!
   user: ID!
+  user_id: ID!
   post: ID!
   comment_content: String!
   image_url: String

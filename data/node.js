@@ -46,6 +46,7 @@ export const commentType = new GraphQLObjectType({
   fields: {
     id: globalIdField(),
     user: { type: GraphQLID },
+    user_id: { type: GraphQLID },
     post: { type: GraphQLID },
     comment_content: { type: GraphQLString },
     image_url: { type: GraphQLString },
