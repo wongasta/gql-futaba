@@ -9,20 +9,26 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type PostsPagination_posts$ref = any;
-export type PostsContainerQueryVariables = {||};
-export type PostsContainerQueryResponse = {|
+export type PostsPaginationQueryVariables = {|
+  count: number,
+  cursor?: ?string,
+|};
+export type PostsPaginationQueryResponse = {|
   +$fragmentRefs: PostsPagination_posts$ref
 |};
-export type PostsContainerQuery = {|
-  variables: PostsContainerQueryVariables,
-  response: PostsContainerQueryResponse,
+export type PostsPaginationQuery = {|
+  variables: PostsPaginationQueryVariables,
+  response: PostsPaginationQueryResponse,
 |};
 */
 
 
 /*
-query PostsContainerQuery {
-  ...PostsPagination_posts
+query PostsPaginationQuery(
+  $count: Int!
+  $cursor: String
+) {
+  ...PostsPagination_posts_1G22uz
 }
 
 fragment PostContainer_post on Post {
@@ -45,8 +51,8 @@ fragment PostContainer_post on Post {
   }
 }
 
-fragment PostsPagination_posts on Query {
-  posts(first: 3) {
+fragment PostsPagination_posts_1G22uz on Query {
+  posts(first: $count, after: $cursor) {
     edges {
       cursor
       node {
@@ -66,40 +72,57 @@ fragment PostsPagination_posts on Query {
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "first",
-    "value": 3
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "count"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "cursor"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "count"
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "user_id",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "image_url",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "created_ts",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -108,13 +131,24 @@ v5 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PostsContainerQuery",
+    "name": "PostsPaginationQuery",
     "selections": [
       {
-        "args": null,
+        "args": [
+          {
+            "kind": "Variable",
+            "name": "count",
+            "variableName": "count"
+          },
+          {
+            "kind": "Variable",
+            "name": "cursor",
+            "variableName": "cursor"
+          }
+        ],
         "kind": "FragmentSpread",
         "name": "PostsPagination_posts"
       }
@@ -124,13 +158,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PostsContainerQuery",
+    "name": "PostsPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "PostConnection",
         "kind": "LinkedField",
         "name": "posts",
@@ -144,7 +178,7 @@ return {
             "name": "edges",
             "plural": true,
             "selections": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -153,7 +187,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -168,11 +202,17 @@ return {
                     "name": "post_content",
                     "storageKey": null
                   },
-                  (v3/*: any*/),
                   (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
-                    "args": (v0/*: any*/),
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "first",
+                        "value": 3
+                      }
+                    ],
                     "concreteType": "CommentConnection",
                     "kind": "LinkedField",
                     "name": "comments",
@@ -186,7 +226,7 @@ return {
                         "name": "edges",
                         "plural": true,
                         "selections": [
-                          (v1/*: any*/),
+                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -195,8 +235,8 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
-                              (v5/*: any*/),
-                              (v2/*: any*/),
+                              (v6/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -204,8 +244,8 @@ return {
                                 "name": "comment_content",
                                 "storageKey": null
                               },
-                              (v3/*: any*/),
-                              (v4/*: any*/)
+                              (v4/*: any*/),
+                              (v5/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -215,7 +255,7 @@ return {
                     ],
                     "storageKey": "comments(first:3)"
                   },
-                  (v5/*: any*/),
+                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -255,11 +295,11 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "posts(first:3)"
+        "storageKey": null
       },
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "filters": null,
         "handle": "connection",
         "key": "PostsPagination_posts",
@@ -269,16 +309,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f9128255f20c1a6612aba7956d55722d",
+    "cacheID": "9c09db573c287ad4579f34b3128fd324",
     "id": null,
     "metadata": {},
-    "name": "PostsContainerQuery",
+    "name": "PostsPaginationQuery",
     "operationKind": "query",
-    "text": "query PostsContainerQuery {\n  ...PostsPagination_posts\n}\n\nfragment PostContainer_post on Post {\n  user_id\n  title\n  post_content\n  image_url\n  created_ts\n  comments(first: 3) {\n    edges {\n      cursor\n      node {\n        id\n        user_id\n        comment_content\n        image_url\n        created_ts\n      }\n    }\n  }\n}\n\nfragment PostsPagination_posts on Query {\n  posts(first: 3) {\n    edges {\n      cursor\n      node {\n        ...PostContainer_post\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query PostsPaginationQuery(\n  $count: Int!\n  $cursor: String\n) {\n  ...PostsPagination_posts_1G22uz\n}\n\nfragment PostContainer_post on Post {\n  user_id\n  title\n  post_content\n  image_url\n  created_ts\n  comments(first: 3) {\n    edges {\n      cursor\n      node {\n        id\n        user_id\n        comment_content\n        image_url\n        created_ts\n      }\n    }\n  }\n}\n\nfragment PostsPagination_posts_1G22uz on Query {\n  posts(first: $count, after: $cursor) {\n    edges {\n      cursor\n      node {\n        ...PostContainer_post\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4e0073c01c3144e1efc37a0a35a187db';
+(node/*: any*/).hash = '16fae2a993f8d1ae6aef48790b8cd9c5';
 
 module.exports = node;

@@ -30,9 +30,9 @@ function App() {
         <Header />
         <Router>
           <Route exact path={'/'}>
-            <Redirect to={'/posts/1'} />
+            <Redirect to={'/posts'} />
           </Route>
-          <Route exact path={'/posts/:page'}>
+          <Route exact path={'/posts'}>
             <PostsContainer />
           </Route>
           <Route path={'/post/:post_id'} />

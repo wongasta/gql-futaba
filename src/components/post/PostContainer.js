@@ -50,7 +50,7 @@ export default createFragmentContainer(
         post_content
         image_url
         created_ts
-        comments(first: $comments_count){
+        comments(first: 3){
           edges{
             cursor
             node{

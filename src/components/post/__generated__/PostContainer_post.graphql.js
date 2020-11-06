@@ -63,12 +63,7 @@ v2 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [
-    {
-      "kind": "RootArgument",
-      "name": "comments_count"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "PostContainer_post",
@@ -94,9 +89,9 @@ return {
       "alias": null,
       "args": [
         {
-          "kind": "Variable",
+          "kind": "Literal",
           "name": "first",
-          "variableName": "comments_count"
+          "value": 3
         }
       ],
       "concreteType": "CommentConnection",
@@ -151,7 +146,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "comments(first:3)"
     }
   ],
   "type": "Post",
@@ -159,6 +154,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'bd825eac342c10d9e2d364b5954d42e7';
+(node/*: any*/).hash = 'e7132742083ab75a709a08b031d7e53a';
 
 module.exports = node;
