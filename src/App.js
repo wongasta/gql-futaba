@@ -4,6 +4,7 @@ import styles from './App.module.css';
 import Header from "./components/Header";
 import PostsContainer from "./components/posts/PostsContainer";
 import initUser from "./util/initUser";
+import PostViewContainer from "./components/post/PostViewContainer";
 
 export const GlobalContext = React.createContext({
   user: null,
@@ -35,7 +36,9 @@ function App() {
           <Route exact path={'/posts'}>
             <PostsContainer />
           </Route>
-          <Route path={'/post/:post_id'} />
+          <Route path={'/post/:post_id'}>
+            <PostViewContainer />
+          </Route>
         </Router>
       </div>
     </GlobalContext.Provider>

@@ -31,7 +31,8 @@ query PostsPaginationQuery(
   ...PostsPagination_posts_1G22uz
 }
 
-fragment PostContainer_post on Post {
+fragment PostContainer_post_2uLzyZ on Post {
+  id
   user_id
   title
   post_content
@@ -56,7 +57,7 @@ fragment PostsPagination_posts_1G22uz on Query {
     edges {
       cursor
       node {
-        ...PostContainer_post
+        ...PostContainer_post_2uLzyZ
         id
         __typename
       }
@@ -105,28 +106,28 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "user_id",
+  "name": "id",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "image_url",
+  "name": "user_id",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "created_ts",
+  "name": "image_url",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "created_ts",
   "storageKey": null
 };
 return {
@@ -188,6 +189,7 @@ return {
                 "plural": false,
                 "selections": [
                   (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -202,8 +204,8 @@ return {
                     "name": "post_content",
                     "storageKey": null
                   },
-                  (v4/*: any*/),
                   (v5/*: any*/),
+                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": [
@@ -235,8 +237,8 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
-                              (v6/*: any*/),
                               (v3/*: any*/),
+                              (v4/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -244,8 +246,8 @@ return {
                                 "name": "comment_content",
                                 "storageKey": null
                               },
-                              (v4/*: any*/),
-                              (v5/*: any*/)
+                              (v5/*: any*/),
+                              (v6/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -255,7 +257,6 @@ return {
                     ],
                     "storageKey": "comments(first:3)"
                   },
-                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -309,12 +310,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9c09db573c287ad4579f34b3128fd324",
+    "cacheID": "afe95d3b9fd0894609110866e0ebf5a3",
     "id": null,
     "metadata": {},
     "name": "PostsPaginationQuery",
     "operationKind": "query",
-    "text": "query PostsPaginationQuery(\n  $count: Int!\n  $cursor: String\n) {\n  ...PostsPagination_posts_1G22uz\n}\n\nfragment PostContainer_post on Post {\n  user_id\n  title\n  post_content\n  image_url\n  created_ts\n  comments(first: 3) {\n    edges {\n      cursor\n      node {\n        id\n        user_id\n        comment_content\n        image_url\n        created_ts\n      }\n    }\n  }\n}\n\nfragment PostsPagination_posts_1G22uz on Query {\n  posts(first: $count, after: $cursor) {\n    edges {\n      cursor\n      node {\n        ...PostContainer_post\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query PostsPaginationQuery(\n  $count: Int!\n  $cursor: String\n) {\n  ...PostsPagination_posts_1G22uz\n}\n\nfragment PostContainer_post_2uLzyZ on Post {\n  id\n  user_id\n  title\n  post_content\n  image_url\n  created_ts\n  comments(first: 3) {\n    edges {\n      cursor\n      node {\n        id\n        user_id\n        comment_content\n        image_url\n        created_ts\n      }\n    }\n  }\n}\n\nfragment PostsPagination_posts_1G22uz on Query {\n  posts(first: $count, after: $cursor) {\n    edges {\n      cursor\n      node {\n        ...PostContainer_post_2uLzyZ\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();

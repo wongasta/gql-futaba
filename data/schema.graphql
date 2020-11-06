@@ -83,7 +83,7 @@ input addPostInput {
 }
 
 type addPostPayload {
-  post: Post
+  postEdge: PostEdge
 }
 
 input addCommentInput {

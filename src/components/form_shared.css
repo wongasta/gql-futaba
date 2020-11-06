@@ -1,0 +1,44 @@
+.form_container{
+  display: block;
+  margin: 0 auto;
+  width: 450px;
+}
+.input_container{
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.input_container .labels{
+  flex: 0 100px;
+}
+
+.input_container .labels label{
+  display: block;
+  text-align: center;
+  margin: 1px;
+  background-color: #ea8;
+  color: #800;
+  font-weight: 700;
+  border: 1px solid #800;
+  padding: 0 5px;
+  height: 25px;
+  font-size: 13px;
+}
+
+.input_container .labels label:nth-child(3){
+  height: 150px;
+}
+
+.input_container .inputs{
+  flex: 0 350px;
+}
+
+.input_container .inputs input, .input_container .inputs textarea{
+  width: 100%;
+  margin: 1px;
+  height: 20px;
+}
+
+.input_container .inputs textarea{
+  height: 140px;
+}

@@ -5,3 +5,20 @@
 .posts_container{
 
 }
+
+.create_post_container{
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid gray;
+}
+
+.new_thread_text{
+  color: maroon;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.new_thread_text a{
+  color: blue;
+  cursor: pointer;
+}

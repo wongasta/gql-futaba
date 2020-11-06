@@ -45,7 +45,7 @@ export const getCommentById = (id) => {
 
 export const getPosts = ({first,last,before,after}) => {
   return new Promise((resolve,reject)=>{
-    let posts=_.cloneDeep(Collection.posts.list());
+    let posts=_.cloneDeep(Collection.posts.list()).reverse();
     posts=posts.map((post)=>{
       post.user_id=post.user;
       post.user=toGlobalId('User',post.user);

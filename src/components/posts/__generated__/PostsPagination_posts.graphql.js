@@ -103,7 +103,13 @@ const node/*: ReaderFragment*/ = {
                   "storageKey": null
                 },
                 {
-                  "args": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "comment_count",
+                      "value": 3
+                    }
+                  ],
                   "kind": "FragmentSpread",
                   "name": "PostContainer_post"
                 }
@@ -146,6 +152,6 @@ const node/*: ReaderFragment*/ = {
   "abstractKey": null
 };
 // prettier-ignore
-(node/*: any*/).hash = 'f22e98fda1543aef45553f11f9afb415';
+(node/*: any*/).hash = '9b7bf9bd9bb3100a4ada2353a49753b6';
 
 module.exports = node;

@@ -12,6 +12,7 @@ import type { FragmentReference } from "relay-runtime";
 declare export opaque type PostContainer_post$ref: FragmentReference;
 declare export opaque type PostContainer_post$fragmentType: PostContainer_post$ref;
 export type PostContainer_post = {|
+  +id: string,
   +user_id: string,
   +title: string,
   +post_content: string,
@@ -45,17 +46,24 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "user_id",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "image_url",
+  "name": "user_id",
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "image_url",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -63,12 +71,19 @@ v2 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": 3,
+      "kind": "LocalArgument",
+      "name": "comment_count"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "PostContainer_post",
   "selections": [
     (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -83,15 +98,15 @@ return {
       "name": "post_content",
       "storageKey": null
     },
-    (v1/*: any*/),
     (v2/*: any*/),
+    (v3/*: any*/),
     {
       "alias": null,
       "args": [
         {
-          "kind": "Literal",
+          "kind": "Variable",
           "name": "first",
-          "value": 3
+          "variableName": "comment_count"
         }
       ],
       "concreteType": "CommentConnection",
@@ -122,14 +137,8 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "id",
-                  "storageKey": null
-                },
                 (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -137,8 +146,8 @@ return {
                   "name": "comment_content",
                   "storageKey": null
                 },
-                (v1/*: any*/),
-                (v2/*: any*/)
+                (v2/*: any*/),
+                (v3/*: any*/)
               ],
               "storageKey": null
             }
@@ -146,7 +155,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "comments(first:3)"
+      "storageKey": null
     }
   ],
   "type": "Post",
@@ -154,6 +163,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'e7132742083ab75a709a08b031d7e53a';
+(node/*: any*/).hash = '674d89d55d1a9bf6058c1e161b294ca0';
 
 module.exports = node;

@@ -8,16 +8,16 @@ import {
   GraphQLBoolean,
 } from 'graphql';
 import {
-  globalIdField,
+  toGlobalId,
   mutationWithClientMutationId,
 } from 'graphql-relay';
-import {postType} from "../node.js";
+import {PostEdge} from "../node.js";
 import {dbAddPost, getPostById} from "../database.js";
 
 export const addPost = mutationWithClientMutationId({
   name: 'addPost',
   outputFields: {
-    post: { type: postType }
+    postEdge: { type: PostEdge }
   },
   inputFields: {
     user: {type: GraphQLNonNull(GraphQLID)},
@@ -29,8 +29,12 @@ export const addPost = mutationWithClientMutationId({
     return new Promise(async (resolve, reject)=>{
       const result = await dbAddPost(args);
       if((result instanceof Error)) return resolve(result);
+      const post = await getPostById(result);
       resolve({
-        post: getPostById(result)
+        postEdge: {
+          cursor: toGlobalId("Post",post.id),
+          node: post
+        }
       });
     });
   }

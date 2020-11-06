@@ -18,7 +18,7 @@ function PostsPagination(props){
     <div className={styles.page_container}>
       <div className={styles.posts_container}>
         {props.posts.posts.edges.map((edge)=>
-          <PostContainer isPost={false} key={edge.cursor} post={edge.node} />
+          <PostContainer isPost={true} key={edge.cursor} post={edge.node} />
         )}
       </div>
       {GeneratePagination()}
@@ -39,7 +39,7 @@ export default createPaginationContainer(
           edges{
             cursor
             node{
-              ...PostContainer_post
+              ...PostContainer_post @arguments(comment_count: 3)
             }
           }
           pageInfo{
@@ -63,7 +63,7 @@ export default createPaginationContainer(
     },
     getVariables(props, {count, cursor}, fragmentVariables) {
       return {
-        count,
+        count: 4,
         cursor
       };
     },
