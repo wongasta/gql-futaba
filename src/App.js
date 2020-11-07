@@ -28,8 +28,8 @@ function App() {
   return (
     <GlobalContext.Provider value={userObj}>
       <div className={styles.main}>
-        <Header />
         <Router>
+          <Header />
           <Route exact path={'/'}>
             <Redirect to={'/posts'} />
           </Route>

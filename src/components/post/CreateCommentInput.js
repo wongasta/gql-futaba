@@ -17,7 +17,8 @@ export default function CreateCommentInput({postId}){
       image_url: form.input_image_url.value
     }
     add_comment(Environment,PostInput,(data)=>{
-
+      form.input_content.value="";
+      form.input_image_url.value="";
     });
     e.preventDefault();
   }
