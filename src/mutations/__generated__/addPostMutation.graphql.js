@@ -65,7 +65,7 @@ mutation addPostMutation(
         post_content
         image_url
         created_ts
-        comments {
+        comments(first: 3) {
           edges {
             cursor
             node {
@@ -178,7 +178,13 @@ v6 = [
               (v5/*: any*/),
               {
                 "alias": null,
-                "args": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "first",
+                    "value": 3
+                  }
+                ],
                 "concreteType": "CommentConnection",
                 "kind": "LinkedField",
                 "name": "comments",
@@ -219,7 +225,7 @@ v6 = [
                     "storageKey": null
                   }
                 ],
-                "storageKey": null
+                "storageKey": "comments(first:3)"
               }
             ],
             "storageKey": null
@@ -249,16 +255,16 @@ return {
     "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "6bb0380c9072ed8b21ab70790a031659",
+    "cacheID": "1841cfb51669a09629db98f398b126a3",
     "id": null,
     "metadata": {},
     "name": "addPostMutation",
     "operationKind": "mutation",
-    "text": "mutation addPostMutation(\n  $input: addPostInput!\n) {\n  add_post(input: $input) {\n    postEdge {\n      cursor\n      node {\n        id\n        user_id\n        title\n        post_content\n        image_url\n        created_ts\n        comments {\n          edges {\n            cursor\n            node {\n              id\n              user_id\n              comment_content\n              image_url\n              created_ts\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation addPostMutation(\n  $input: addPostInput!\n) {\n  add_post(input: $input) {\n    postEdge {\n      cursor\n      node {\n        id\n        user_id\n        title\n        post_content\n        image_url\n        created_ts\n        comments(first: 3) {\n          edges {\n            cursor\n            node {\n              id\n              user_id\n              comment_content\n              image_url\n              created_ts\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a304ab1ddd877ccdec74c109e9583da5';
+(node/*: any*/).hash = '06a0689c86bc28e78fa78672e548bc6f';
 
 module.exports = node;

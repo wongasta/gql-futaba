@@ -14,7 +14,7 @@ const mutation = graphql`
           post_content
           image_url
           created_ts
-          comments{
+          comments (first: 3){
             edges{
               cursor
               node{

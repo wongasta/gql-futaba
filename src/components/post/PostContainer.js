@@ -17,16 +17,16 @@ function generateHeader({id,user_id,title,created_ts},showExpand=false){
 }
 
 function PostContainer(props){
-  const {user_id,title,post_content,image_url,created_ts,comments} = props.post;
+  const {title,post_content,image_url,comments} = props.post;
   const isPost=props.isPost;
-  const comment_nodes = comments?.edges || [];
+  const comment_nodes = comments.edges;
   const has_comment = comment_nodes.length;
   let commentsContainer=null;
   if(has_comment){
     commentsContainer=comment_nodes.map((edge)=> {
       const comment=edge.node;
       return (<div className={styles.comment_container} key={edge.cursor}>
-        {image_url?(<img alt={comment.title} src={comment.image_url} className={styles.post_img} />):null}
+        {comment.image_url?(<img alt={comment.title} src={comment.image_url} className={styles.post_img} />):null}
         {generateHeader(comment)}
         <div className={styles.content_container}>{comment.comment_content}</div>
       </div>);

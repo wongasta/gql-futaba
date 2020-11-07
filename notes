@@ -58,5 +58,10 @@ import {
 
 IMPORTANT LESSONS:
 
+To pass fragment downwards, make sure using @arguments directive.
+To make sure you get access to fragment props, parent needs to pass down props (post={obj} for example) exactly as child fragment key.
 For connection object in Relay, if you want to customize cursor, pagination, etc - do NOT use connectionFromArray. Instead implement resolver function yourself.
 When throwing error in mutateAndGetPayload just RESOLVE ERROR OBJECT. DO NOT THROW.
+When using updater of mutation, make sure all children of return object schema is the SAME (even first: 3 for example), otherwise components won't render correctly.
+Pagination original query variables is passed from parent. Afterwards use getVariables method.
+When using pagination, it can only go FORWARDS or BACKWARDS, not BOTH. Design choice.

@@ -94,6 +94,5 @@ input addCommentInput {
 }
 
 type addCommentPayload {
-  post: Post
-  comment: Comment
+  commentEdge: CommentEdge
 }

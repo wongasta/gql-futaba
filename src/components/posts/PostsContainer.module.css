@@ -2,8 +2,11 @@
 
 }
 
-.posts_container{
-
+.posts_container h3{
+  color: maroon;
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
 }
 
 .create_post_container{

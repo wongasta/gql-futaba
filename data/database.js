@@ -39,6 +39,8 @@ export const getUserById = (id) =>{
 export const getCommentById = (id) => {
   return new Promise((resolve,reject)=> {
     let Comment = _.cloneDeep(Collection.comments.get(id));
+    Comment.user_id=Comment.user;
+    Comment.user=toGlobalId('User',Comment.user);;
     resolve(Comment);
   });
 }

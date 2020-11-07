@@ -1,5 +1,8 @@
-.page_container{
-
+.page_container h3{
+  color: maroon;
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
 }
 
 .posts_container{

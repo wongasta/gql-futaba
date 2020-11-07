@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {createPaginationContainer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import styles from "./PostsPagination.module.css";
 import PostContainer from "../post/PostContainer";
 
-const POSTS_PER_PAGE=3;
+const POSTS_PER_PAGE=4;
 
 function PostsPagination(props){
   const GeneratePagination=()=>{
@@ -14,10 +14,12 @@ function PostsPagination(props){
       </div>
     )
   };
+  const edges = props.posts.posts.edges;
+  if(!edges.length) return (<div className={styles.page_container}><h3>No Posts</h3></div>)
   return (
     <div className={styles.page_container}>
       <div className={styles.posts_container}>
-        {props.posts.posts.edges.map((edge)=>
+        {edges.map((edge)=>
           <PostContainer isPost={true} key={edge.cursor} post={edge.node} />
         )}
       </div>
@@ -63,7 +65,7 @@ export default createPaginationContainer(
     },
     getVariables(props, {count, cursor}, fragmentVariables) {
       return {
-        count: 4,
+        count,
         cursor
       };
     },

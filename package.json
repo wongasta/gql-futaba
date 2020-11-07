@@ -35,7 +35,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "relay": "relay-compiler --src ./src --schema ./data/schema.graphql --extensions js jsx",
+    "relay-build": "relay-compiler --src ./src --schema ./data/schema.graphql --extensions js jsx",
+    "relay-watch": "relay-compiler --src ./src --schema ./data/schema.graphql --extensions js jsx --watch",
     "flow": "flow"
   },
   "eslintConfig": {
