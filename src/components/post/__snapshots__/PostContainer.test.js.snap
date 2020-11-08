@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostContainer Posts::initial render 1`] = `
+<section
+  className="container"
+>
+  <p
+    className="preview_header"
+  >
+    <span
+      className="title_display"
+    >
+      Test Title
+       
+    </span>
+    <span
+      className="user_display"
+    >
+      2
+       
+    </span>
+    <span
+      className="ts_display"
+    >
+      Saturday, November 7th 2020, 9:57:57 pm
+    </span>
+  </p>
+  <div
+    className="content_container"
+  >
+    Test Content
+  </div>
+  <div
+    className="comment_container"
+    key="3"
+  >
+    <p
+      className="preview_header"
+    >
+      <span
+        className="user_display"
+      >
+        5
+         
+      </span>
+      <span
+        className="ts_display"
+      >
+        Saturday, November 7th 2020, 9:58:04 pm
+      </span>
+    </p>
+    <div
+      className="content_container"
+    >
+      Comment 1
+    </div>
+  </div>
+  <div
+    className="comment_container"
+    key="6"
+  >
+    <p
+      className="preview_header"
+    >
+      <span
+        className="user_display"
+      >
+        8
+         
+      </span>
+      <span
+        className="ts_display"
+      >
+        Saturday, November 7th 2020, 9:58:05 pm
+      </span>
+    </p>
+    <div
+      className="content_container"
+    >
+      Comment 2
+    </div>
+  </div>
+</section>
+`;
