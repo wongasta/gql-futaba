@@ -1,10 +1,9 @@
 import React, {useRef,useContext} from "react";
 import '../form_shared.css';
 import {GlobalContext} from "../../GlobalContext";
-import Environment from '../../util/relayEnv';
 import add_comment from "../../mutations/add_comment";
 
-export default function CreateCommentInput({postId}){
+export default function CreateCommentInput({postId,environment}){
   const commentForm = useRef(null);
   const {user,user_id} = useContext(GlobalContext);
 
@@ -16,7 +15,7 @@ export default function CreateCommentInput({postId}){
       comment_content: form.querySelector('#input_content').value,
       image_url: form.querySelector('#input_image_url').value
     }
-    add_comment(Environment,PostInput,(data)=>{
+    add_comment(environment,PostInput,(data)=>{
       form.querySelector('#input_content').value="";
       form.querySelector('#input_image_url').value="";
     });

@@ -2,10 +2,9 @@ import React, {useRef,useContext} from "react";
 import '../form_shared.css';
 import { useHistory } from "react-router-dom";
 import {GlobalContext} from "../../GlobalContext";
-import Environment from '../../util/relayEnv';
 import add_post from "../../mutations/add_post";
 
-export default function CreatePostInput(props){
+export default function CreatePostInput({environment}){
   const routerHistory = useHistory();
   const postForm = useRef(null);
   const {user,user_id} = useContext(GlobalContext);
@@ -18,7 +17,7 @@ export default function CreatePostInput(props){
       post_content: form.querySelector('#input_content').value,
       image_url: form.querySelector('#input_image_url').value
     }
-    add_post(Environment,PostInput,(data)=>{
+    add_post(environment,PostInput,(data)=>{
       routerHistory.push(`/post/${data.postEdge.cursor}`);
     });
     e.preventDefault();

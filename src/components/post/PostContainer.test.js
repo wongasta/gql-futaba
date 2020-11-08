@@ -17,7 +17,7 @@ describe("PostContainer", ()=>{
     jest.clearAllMocks();
   })
 
-  test("Posts::initial render", ()=>{
+  test("Post::initial render", ()=>{
     const mockEnvironment = createMockEnvironment();
     const PostContainerWrapper = mount(<MemoryRouter>
       <GlobalContext.Provider value={{user: "abc", user_id: "abc"}}>
@@ -79,6 +79,8 @@ describe("PostContainer", ()=>{
       })
     );
     PostContainerWrapper.update();
+    const children = PostContainerWrapper.find(PostContainer).find('section').children();
+    expect(children.length).toBe(4);
     expect(toJson(PostContainerWrapper.find(PostContainer).find('section'))).toMatchSnapshot();
   });
 

@@ -31,6 +31,9 @@ export default function add_comment(environment, postInput, successCb){
       onCompleted: (response, error)=>{
         successCb(response.add_comment);
       },
+      onError: (error)=>{
+        console.log(error)
+      },
       updater: (store, data)=>{
         const newCommentEdge = store.getRootField('add_comment').getLinkedRecord('commentEdge');
         const comments = store.get(postInput.post).getLinkedRecord('comments',{first: 2147483647});

@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import {QueryRenderer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import {useParams} from "react-router-dom";
-import Environment from '../../util/relayEnv';
 import styles from './PostViewContainer.module.css';
 import PostContainer from "./PostContainer";
 import CreateCommentInput from "./CreateCommentInput";
 
-export default function PostViewContainer(props){
+export default function PostViewContainer({environment}){
   const [newThreadFlag, toggleThreadFlag] = useState(false);
   let { post_id } = useParams();
   function GeneratePostCreator(){
-    if(newThreadFlag) return <CreateCommentInput postId={post_id} />;
+    if(newThreadFlag) return <CreateCommentInput environment={environment} postId={post_id} />;
     return (
       <span className={styles.new_thread_text}>[ <a href="/#" onClick={(e)=>{
         e.preventDefault();
@@ -21,7 +20,7 @@ export default function PostViewContainer(props){
   }
   return(
     <QueryRenderer
-      environment={Environment}
+      environment={environment}
       query={graphql`
         query PostViewContainerQuery($id: ID!, $comment_count: Int){
           post(id: $id){

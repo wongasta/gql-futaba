@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import {QueryRenderer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import Environment from '../../util/relayEnv';
 import styles from './PostsContainer.module.css';
 import PostsPagination from "./PostsPagination";
 import CreatePostInput from "./CreatePostInput";
-export default function PostsContainer(props){
+
+export default function PostsContainer({environment}){
   const [newThreadFlag, toggleThreadFlag] = useState(false);
   function GeneratePostCreator(){
-    if(newThreadFlag) return <CreatePostInput />;
+    if(newThreadFlag) return <CreatePostInput environment={environment} />;
     return (
       <span className={styles.new_thread_text}>[ <a href="/#" onClick={(e)=>{
         e.preventDefault();
@@ -18,7 +18,7 @@ export default function PostsContainer(props){
   }
   return(
     <QueryRenderer
-      environment={Environment}
+      environment={environment}
       query={graphql`
         query PostsContainerQuery($count: Int){
           ...PostsPagination_posts @arguments(count: $count)

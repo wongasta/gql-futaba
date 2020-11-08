@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import PostsContainer from "./components/posts/PostsContainer";
 import initUser from "./util/initUser";
 import PostViewContainer from "./components/post/PostViewContainer";
+import environment from './util/relayEnv';
 import {GlobalContext} from "./GlobalContext";
 
 function App() {
@@ -30,10 +31,10 @@ function App() {
             <Redirect to={'/posts'} />
           </Route>
           <Route exact path={'/posts'}>
-            <PostsContainer />
+            <PostsContainer environment={environment} />
           </Route>
           <Route path={'/post/:post_id'}>
-            <PostViewContainer />
+            <PostViewContainer environment={environment} />
           </Route>
         </Router>
       </div>

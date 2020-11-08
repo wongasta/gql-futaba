@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PostContainer Posts::initial render 1`] = `
+exports[`PostContainer Post::initial render 1`] = `
 <section
   className="container"
 >
