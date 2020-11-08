@@ -5,11 +5,7 @@ import Header from "./components/Header";
 import PostsContainer from "./components/posts/PostsContainer";
 import initUser from "./util/initUser";
 import PostViewContainer from "./components/post/PostViewContainer";
-
-export const GlobalContext = React.createContext({
-  user: null,
-  user_id: null
-});
+import {GlobalContext} from "./GlobalContext";
 
 function App() {
   const [userObj, updateUser]=useState({

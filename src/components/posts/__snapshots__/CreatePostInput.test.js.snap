@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreatePostInput Construction Snapshot 1`] = `
+<CreatePostInput>
+  <form
+    className="form_container"
+    id="post_form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="input_container"
+    >
+      <div
+        className="labels"
+      >
+        <label
+          htmlFor="input_user"
+        >
+          User
+        </label>
+        <label
+          htmlFor="input_title"
+        >
+          Title
+        </label>
+        <label
+          className="content"
+          htmlFor="input_content"
+        >
+          Comment
+        </label>
+        <label
+          htmlFor="input_image_url"
+        >
+          Image
+        </label>
+      </div>
+      <div
+        className="inputs"
+      >
+        <input
+          disabled={true}
+          id="input_user"
+          name="input_user"
+          type="text"
+          value="abc"
+        />
+        <input
+          id="input_title"
+          name="input_title"
+          placeholder="title"
+          required={true}
+          type="text"
+        />
+        <textarea
+          defaultValue="Comment"
+          id="input_content"
+          name="input_content"
+        />
+        <input
+          id="input_image_url"
+          name="input_image_url"
+          placeholder="Image Link"
+          type="url"
+        />
+      </div>
+    </div>
+    <div
+      className="submit_container"
+    >
+      <button
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</CreatePostInput>
+`;

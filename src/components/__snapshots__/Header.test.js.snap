@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Construction Snapshot 1`] = `
+<Header>
+  <header
+    className="header"
+  >
+    <Link
+      to="/posts"
+    >
+      <LinkAnchor
+        href="/posts"
+        navigate={[Function]}
+      >
+        <a
+          href="/posts"
+          onClick={[Function]}
+        >
+          <img
+            alt="GQL"
+            className="logo"
+            src="logo.png"
+          />
+        </a>
+      </LinkAnchor>
+    </Link>
+    <h1
+      className="text"
+    >
+      /gql/ - GraphQL
+    </h1>
+  </header>
+</Header>
+`;

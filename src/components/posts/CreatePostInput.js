@@ -1,7 +1,7 @@
 import React, {useRef,useContext} from "react";
 import '../form_shared.css';
 import { useHistory } from "react-router-dom";
-import {GlobalContext} from "../../App";
+import {GlobalContext} from "../../GlobalContext";
 import Environment from '../../util/relayEnv';
 import add_post from "../../mutations/add_post";
 
@@ -14,9 +14,9 @@ export default function CreatePostInput(props){
     const form=postForm.current;
     const PostInput={
       user: user,
-      title: form.input_title.value,
-      post_content: form.input_content.value,
-      image_url: form.input_image_url.value
+      title: form.querySelector('#input_title').value,
+      post_content: form.querySelector('#input_content').value,
+      image_url: form.querySelector('#input_image_url').value
     }
     add_post(Environment,PostInput,(data)=>{
       routerHistory.push(`/post/${data.postEdge.cursor}`);
@@ -34,10 +34,10 @@ export default function CreatePostInput(props){
           <label htmlFor="input_image_url">Image</label>
         </div>
         <div className={"inputs"}>
-          <input id="input_user" type="text" value={user_id} disabled={true} />
-          <input id="input_title" type="text" placeholder="title" required={true} />
-          <textarea id="input_content" defaultValue={"Comment"}></textarea>
-          <input id="input_image_url" type="url" placeholder="Image Link" />
+          <input id="input_user" name="input_user" type="text" value={user_id || ""} disabled={true} />
+          <input id="input_title" name="input_title" type="text" placeholder="title" required={true} />
+          <textarea id="input_content" name="input_content" defaultValue={"Comment"}></textarea>
+          <input id="input_image_url" name="input_image_url" type="url" placeholder="Image Link" />
         </div>
       </div>
       <div className={"submit_container"}>

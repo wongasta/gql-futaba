@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateCommentInput Construction Snapshot 1`] = `
+<CreateCommentInput
+  postId="abc"
+>
+  <form
+    className="form_container"
+    id="comment_form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="input_container"
+    >
+      <div
+        className="labels"
+      >
+        <label
+          htmlFor="input_user"
+        >
+          User
+        </label>
+        <label
+          className="content"
+          htmlFor="input_content"
+        >
+          Comment
+        </label>
+        <label
+          htmlFor="input_image_url"
+        >
+          Image
+        </label>
+      </div>
+      <div
+        className="inputs"
+      >
+        <input
+          disabled={true}
+          id="input_user"
+          type="text"
+          value="abc"
+        />
+        <textarea
+          defaultValue="Reply"
+          id="input_content"
+        />
+        <input
+          id="input_image_url"
+          placeholder="Image Link"
+          type="url"
+        />
+      </div>
+    </div>
+    <div
+      className="submit_container"
+    >
+      <button
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</CreateCommentInput>
+`;
