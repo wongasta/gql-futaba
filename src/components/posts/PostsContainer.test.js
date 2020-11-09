@@ -76,6 +76,10 @@ const getMockState=(context,generateId,page)=>{
 }
 
 describe("PostsContainer", ()=>{
+  afterAll(()=>{
+    jest.clearAllMocks();
+    useHistory.mockRestore()
+  })
   test("add_post", ()=>{
     const MockEnvironment = createMockEnvironment();
     const PostsContainerWrapper = mount(

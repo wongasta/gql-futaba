@@ -5,16 +5,15 @@ import Header from "./components/Header";
 import PostsContainer from "./components/posts/PostsContainer";
 import initUser from "./util/initUser";
 import PostViewContainer from "./components/post/PostViewContainer";
-import environment from './util/relayEnv';
 import {GlobalContext} from "./GlobalContext";
 
-function App() {
+function App({environment}) {
   const [userObj, updateUser]=useState({
     user: null,
     user_id: null
   });
   useEffect(()=>{
-    if(!userObj.user || !userObj.user_id) initUser((newUser,newUserId)=>{
+    if(!userObj.user || !userObj.user_id) initUser(environment,(newUser,newUserId)=>{
       updateUser({
         user: newUser,
         user_id: newUserId
