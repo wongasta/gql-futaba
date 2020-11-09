@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from "enzyme";
 import { MemoryRouter } from 'react-router'
-import toJson from "enzyme-to-json";
 import {GlobalContext} from "../../GlobalContext";
 import {
   createMockEnvironment,
@@ -9,7 +8,6 @@ import {
 } from 'relay-test-utils';
 import PostViewContainer from "./PostViewContainer";
 import {useParams} from "react-router-dom";
-
 jest.mock('react-router-dom', ()=>({
   ...jest.requireActual('react-router-dom'),
   useParams: () => ({
@@ -90,6 +88,6 @@ describe("PostViewContainer", ()=>{
     }));
     PostViewContainerWrapper.update();
     expect(PostViewContainerWrapper.find('.comment_container').length).toBe(3);
-    expect(PostViewContainerWrapper.find('.comment_container').at(2).find('.content_container').text()).toBe("new_comment_reply")
+    expect(PostViewContainerWrapper.find('.comment_container').at(2).find('.content_container').text()).toBe("new_comment_reply");
   });
 })

@@ -21,8 +21,7 @@ describe("CreatePostInput", ()=>{
   test("Submission", ()=>{
     const Component = mount(<GlobalContext.Provider value={{user: "abc", user_id: "abc"}}><CreatePostInput /></GlobalContext.Provider>);
     Component.find("#input_title").instance().value="mock title";
-    Component.find("#input_content").instance().value="mock content"
-    Component.update();
+    Component.find("#input_content").instance().value="mock content";
     Component.find("#post_form").simulate('submit');
     expect(add_post).toHaveBeenCalledTimes(1);
     expect(add_post.mock.calls[0][1].user).toBe('abc');
