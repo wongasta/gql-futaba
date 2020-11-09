@@ -7,7 +7,6 @@ import {
   MockPayloadGenerator,
 } from 'relay-test-utils';
 import PostViewContainer from "./PostViewContainer";
-import {useParams} from "react-router-dom";
 jest.mock('react-router-dom', ()=>({
   ...jest.requireActual('react-router-dom'),
   useParams: () => ({

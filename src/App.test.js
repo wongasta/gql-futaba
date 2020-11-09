@@ -6,7 +6,6 @@ import {
 } from 'relay-test-utils';
 import * as add_user from "./mutations/add_user";
 import App from "./App";
-import PostsContainer from "./components/posts/PostsContainer";
 jest.mock('./components/posts/PostsContainer', ()=>{
   return function(){
     return (<></>);
@@ -30,14 +29,7 @@ class LocalStorageMock {
     delete this.store[key];
   }
 }
-global.localStorage = new LocalStorageMock;
-
-const waitForComponentToPaint = async (wrapper) => {
-  await act(async () => {
-    await new Promise(resolve => setTimeout(resolve));
-    wrapper.update();
-  });
-};
+global.localStorage = new LocalStorageMock();
 
 describe("App", ()=>{
   test("create new user first time", async ()=>{

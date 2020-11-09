@@ -6,8 +6,13 @@ import PostsContainer from "./components/posts/PostsContainer";
 import initUser from "./util/initUser";
 import PostViewContainer from "./components/post/PostViewContainer";
 import {GlobalContext} from "./GlobalContext";
+import typeof EnvironmentType from "./util/relayEnv";
 
-function App({environment}) {
+type Props={
+  environment: EnvironmentType
+}
+
+function App({environment}: Props) {
   const [userObj, updateUser]=useState({
     user: null,
     user_id: null
