@@ -1,12 +1,13 @@
+//@flow
 import {
   Environment,
   Network,
   RecordSource,
   Store,
 } from 'relay-runtime';
+import type {Environment as EnvironmentType} from 'relay-runtime';
 
 async function fetchQuery(operation, variables){
-  // console.log(operation.text, variables);
   const response = await fetch('/graphql', {
     method: 'POST',
     headers: {
@@ -20,7 +21,7 @@ async function fetchQuery(operation, variables){
   return await response.json();
 }
 
-export default new Environment({
+export default (new Environment({
   network: Network.create(fetchQuery),
   store: new Store(new RecordSource())
-});
+}):EnvironmentType);

@@ -1,6 +1,7 @@
 # Custom
 .idea
 data/db/*
+flow-typed/*
 
 # Logs
 logs

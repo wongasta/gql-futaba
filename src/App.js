@@ -1,4 +1,6 @@
-import React, { useState, useEffect  } from "react";
+// @flow
+import * as React from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import styles from './App.module.css';
 import Header from "./components/Header";
@@ -6,19 +8,23 @@ import PostsContainer from "./components/posts/PostsContainer";
 import initUser from "./util/initUser";
 import PostViewContainer from "./components/post/PostViewContainer";
 import {GlobalContext} from "./GlobalContext";
-import typeof EnvironmentType from "./util/relayEnv";
 
+import type {Environment as EnvironmentType} from 'relay-runtime';
 type Props={
   environment: EnvironmentType
 }
+export type UserObjType={
+  user: ?string,
+  user_id: ?string
+}
 
-function App({environment}: Props) {
-  const [userObj, updateUser]=useState({
+function App({environment}: Props): React.Node {
+  const [userObj, updateUser]=useState<UserObjType>({
     user: null,
     user_id: null
   });
   useEffect(()=>{
-    if(!userObj.user || !userObj.user_id) initUser(environment,(newUser,newUserId)=>{
+    if(!userObj.user || !userObj.user_id) initUser(environment,(newUser:string,newUserId:string)=>{
       updateUser({
         user: newUser,
         user_id: newUserId

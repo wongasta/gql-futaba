@@ -1,6 +1,9 @@
 import add_user from "../mutations/add_user";
 
-export default function initUser(environment,cb){
+import type {Environment as EnvironmentType} from 'relay-runtime';
+type InitUserCb = (string, string)=>void
+
+export default function initUser(environment:EnvironmentType,cb:InitUserCb){
   const LSUser = localStorage.getItem("user"), LSUserId = localStorage.getItem("user_id");
   if(LSUser && LSUserId) return cb(LSUser, LSUserId);
   add_user(environment, ({id:user, user_id})=>{

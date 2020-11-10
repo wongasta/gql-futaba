@@ -1,5 +1,4 @@
 [ignore]
-<PROJECT_ROOT>/node_modules/.*
 .*/__generated__/.*
 [include]
 
@@ -9,4 +8,6 @@
 
 [options]
 react.runtime=automatic
+module.ignore_non_literal_requires=true
+module.system=haste
 [strict]
