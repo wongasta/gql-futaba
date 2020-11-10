@@ -1,5 +1,6 @@
 # Custom
 .idea
+.vscode
 data/db/*
 flow-typed/*
 

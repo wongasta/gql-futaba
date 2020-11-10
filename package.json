@@ -40,10 +40,12 @@
     "relay-test-utils": "^10.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-react": "react-scripts start",
+    "start-server": "node data/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --colors",
     "test-all": "react-scripts test --colors --watchAll",
+    "test-coverage": "react-scripts test --colors --watchAll --coverage",
     "test-update": "react-scripts test --colors --u",
     "eject": "react-scripts eject",
     "relay-build": "relay-compiler --src ./src --schema ./data/schema.graphql --extensions js jsx",

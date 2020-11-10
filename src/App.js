@@ -8,8 +8,8 @@ import PostsContainer from "./components/posts/PostsContainer";
 import initUser from "./util/initUser";
 import PostViewContainer from "./components/post/PostViewContainer";
 import {GlobalContext} from "./GlobalContext";
-
 import type {Environment as EnvironmentType} from 'relay-runtime';
+
 type Props={
   environment: EnvironmentType
 }

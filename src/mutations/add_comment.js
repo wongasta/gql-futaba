@@ -1,5 +1,30 @@
+//@flow
 import {commitMutation} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
+import type {Environment as EnvironmentType} from 'relay-runtime';
+
+export type PostInputType={
+  user: ?string,
+  post: string,
+  comment_content: ?string,
+  image_url: ?string
+}
+export type CommentEdgeType={
+  cursor: string,
+  node: {
+    id: string,
+    user: string,
+    user_id: string,
+    post: string,
+    comment_content: string,
+    image_url: ?string,
+    created_ts: number
+  }
+}
+type AddCommentPayloadType={
+  commentEdge: CommentEdgeType
+}
+type SuccessCbType=(AddCommentPayloadType)=>void
 
 const mutation = graphql`
   mutation addCommentMutation($input: addCommentInput!){
@@ -20,7 +45,7 @@ const mutation = graphql`
   }
 `;
 
-export default function add_comment(environment, postInput, successCb){
+export default (function add_comment(environment, postInput, successCb){
   commitMutation(
     environment,
     {
@@ -35,10 +60,10 @@ export default function add_comment(environment, postInput, successCb){
         console.log(error)
       },
       updater: (store, data)=>{
-        const newCommentEdge = store.getRootField('add_comment').getLinkedRecord('commentEdge');
-        const comments = store.get(postInput.post).getLinkedRecord('comments',{first: 2147483647});
-        comments.setLinkedRecords([...comments.getLinkedRecords('edges'), newCommentEdge], 'edges');
+        const newCommentEdge = store.getRootField('add_comment')?.getLinkedRecord('commentEdge');
+        const comments = store.get(postInput.post)?.getLinkedRecord('comments',{first: 2147483647});
+        comments?.setLinkedRecords([...(comments?.getLinkedRecords('edges') || []), newCommentEdge], 'edges');
       }
     }
   )
-}
+}: (EnvironmentType,PostInputType,SuccessCbType)=>void)

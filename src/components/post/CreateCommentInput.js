@@ -1,23 +1,36 @@
-import React, {useRef,useContext} from "react";
+//@flow
+import * as React from "react";
+import {useRef,useContext} from "react";
 import '../form_shared.css';
 import {GlobalContext} from "../../GlobalContext";
 import add_comment from "../../mutations/add_comment";
+import type {Environment as EnvironmentType} from 'relay-runtime';
+import type {UserObjType} from '../../App';
+import type {PostInputType} from '../../mutations/add_comment';
 
-export default function CreateCommentInput({postId,environment}){
+type Props={
+  postId: string,
+  environment: EnvironmentType
+}
+
+export default function CreateCommentInput({postId,environment}:Props): React.Node{
   const commentForm = useRef(null);
-  const {user,user_id} = useContext(GlobalContext);
+  const {user,user_id}:UserObjType = useContext(GlobalContext);
 
   function handleSubmit(e){
     const form=commentForm.current;
-    const PostInput={
+    const CommentContentElement = ((form && form.querySelector('#input_content'): any): null|HTMLInputElement);
+    const ImageUrlElement = ((form && form.querySelector('#input_image_url'): any): null|HTMLInputElement);
+    if(!CommentContentElement || !ImageUrlElement) return;
+    const PostInput:PostInputType={
       user: user,
       post: postId,
-      comment_content: form.querySelector('#input_content').value,
-      image_url: form.querySelector('#input_image_url').value
-    }
+      comment_content: CommentContentElement?.value,
+      image_url: ImageUrlElement?.value
+    } 
     add_comment(environment,PostInput,(data)=>{
-      form.querySelector('#input_content').value="";
-      form.querySelector('#input_image_url').value="";
+      CommentContentElement.value="";
+      ImageUrlElement.value="";
     });
     e.preventDefault();
   }

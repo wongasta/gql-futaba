@@ -1,6 +1,32 @@
 import {commitMutation} from 'react-relay';
 import {ConnectionHandler} from 'relay-runtime';
 import graphql from 'babel-plugin-relay/macro';
+import type {Environment as EnvironmentType} from 'relay-runtime';
+import type {CommentEdgeType} from './add_comment';
+
+export type PostInputType={
+  user: ?string,
+  title: ?string,
+  post_content: ?string,
+  image_url: ?string
+}
+type AddPostPayloadType={
+  postEdge: {
+    cursor: string,
+    node: {
+      id: string,
+      user_id: string,
+      title: string,
+      post_content: string,
+      image_url: ?string,
+      created_ts: number,
+      comments: {
+        edges: Array<CommentEdgeType>
+      }
+    }
+  }
+}
+type SuccessCbType=(AddPostPayloadType)=>void
 
 const mutation = graphql`
   mutation addPostMutation($input: addPostInput!){
@@ -32,7 +58,7 @@ const mutation = graphql`
   }
 `;
 
-export default function add_post(environment, postInput, successCb){
+export default (function add_post(environment, postInput, successCb){
   commitMutation(
     environment,
     {
@@ -44,14 +70,14 @@ export default function add_post(environment, postInput, successCb){
         successCb(response.add_post);
       },
       updater: (store, data)=>{
-        const postEdge = store.getRootField('add_post').getLinkedRecord('postEdge');
-        const postsConnection = ConnectionHandler.getConnection(
+        const postEdge = store.getRootField('add_post')?.getLinkedRecord('postEdge');
+        const postsConnection = ConnectionHandler?.getConnection(
           store.getRoot(),
           'PostsPagination_posts',
           {}
         );
-        ConnectionHandler.insertEdgeBefore(postsConnection, postEdge);
+        ConnectionHandler?.insertEdgeBefore(postsConnection, postEdge);
       }
     }
   )
-}
+}:(EnvironmentType, PostInputType, SuccessCbType)=>void)
