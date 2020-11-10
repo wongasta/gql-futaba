@@ -1,13 +1,24 @@
-import React from "react";
+//@flow
+import * as React from "react";
 import {createPaginationContainer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import styles from "./PostsPagination.module.css";
 import PostContainer from "../post/PostContainer";
+import type {PostEdgeType} from '../../mutations/add_post';
+
+export type Props={
+  posts:{
+    posts:{
+      edges: Array<PostEdgeType>
+    }
+  },
+  relay: any
+}
 
 const POSTS_PER_PAGE=4;
 
-function PostsPagination(props){
-  const GeneratePagination=()=>{
+function PostsPagination(props: Props): React.Node{
+  const GeneratePagination=(): React.Node=>{
     return (
       <div className={styles.pagination_container}>
         <button className={styles.pagination_button} disabled={!props.relay.hasMore()} onClick={()=> props.relay.loadMore(POSTS_PER_PAGE)}>Load More</button>
@@ -28,7 +39,7 @@ function PostsPagination(props){
   )
 }
 
-export default createPaginationContainer(
+export default (createPaginationContainer(
   PostsPagination,
   {
     posts: graphql`
@@ -78,4 +89,4 @@ export default createPaginationContainer(
       }
     `
   }
-)
+): any)

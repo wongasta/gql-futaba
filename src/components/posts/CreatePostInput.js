@@ -1,3 +1,4 @@
+//@flow
 import * as React from "react";
 import {useRef,useContext} from "react";
 import '../form_shared.css';
@@ -7,7 +8,7 @@ import add_post from "../../mutations/add_post";
 import type {Environment as EnvironmentType} from 'relay-runtime';
 
 type Props={
-  environemnt: EnvironmentType
+  environment: EnvironmentType
 }
 
 export default function CreatePostInput({environment}: Props): React.Node{

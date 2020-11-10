@@ -1,15 +1,30 @@
-import React, { useState } from "react";
+//@flow
+import * as React from "react";
+import { useState } from "react";
 import {QueryRenderer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import {useParams} from "react-router-dom";
 import styles from './PostViewContainer.module.css';
 import PostContainer from "./PostContainer";
 import CreateCommentInput from "./CreateCommentInput";
+import type {Environment as EnvironmentType} from 'relay-runtime';
+import type {PostType} from '../../mutations/add_post';
 
-export default function PostViewContainer({environment}){
-  const [newThreadFlag, toggleThreadFlag] = useState(false);
+type Props={
+  environment: EnvironmentType
+}
+type QueryRendererArgs={
+  error: any,
+  props: ?{
+    post: PostType
+  }
+}
+
+export default function PostViewContainer({environment}:Props): React.Node{
+  const [newThreadFlag, toggleThreadFlag] = useState<boolean>(false);
   let { post_id } = useParams();
-  function GeneratePostCreator(){
+  if(!post_id) return null;
+  function GeneratePostCreator(): React.Node{
     if(newThreadFlag) return <CreateCommentInput environment={environment} postId={post_id} />;
     return (
       <span className={styles.new_thread_text}>[ <a href="/#" onClick={(e)=>{
@@ -32,7 +47,7 @@ export default function PostViewContainer({environment}){
         id: post_id,
         comment_count: 2147483647
       }}
-      render={({error,props})=>{
+      render={({error,props}: QueryRendererArgs): React.Node=>{
         if(error) return (<div className={styles.post_container}><h3>Error!</h3></div>);
         if(!props) return (<div className={styles.post_container}><h3>Loading...</h3></div>);
         return (

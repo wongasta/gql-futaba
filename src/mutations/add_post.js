@@ -1,3 +1,4 @@
+//@flow
 import {commitMutation} from 'react-relay';
 import {ConnectionHandler} from 'relay-runtime';
 import graphql from 'babel-plugin-relay/macro';
@@ -6,25 +7,27 @@ import type {CommentEdgeType} from './add_comment';
 
 export type PostInputType={
   user: ?string,
-  title: ?string,
-  post_content: ?string,
+  title: string,
+  post_content: string,
   image_url: ?string
 }
-type AddPostPayloadType={
-  postEdge: {
-    cursor: string,
-    node: {
-      id: string,
-      user_id: string,
-      title: string,
-      post_content: string,
-      image_url: ?string,
-      created_ts: number,
-      comments: {
-        edges: Array<CommentEdgeType>
-      }
-    }
+export type PostType={
+  id: string,
+  user_id: string,
+  title: string,
+  post_content: string,
+  image_url: ?string,
+  created_ts: number,
+  comments: {
+    edges: Array<CommentEdgeType>
   }
+}
+export type PostEdgeType={
+  cursor: string,
+  node: PostType
+}
+type AddPostPayloadType={
+  postEdge: PostEdgeType
 }
 type SuccessCbType=(AddPostPayloadType)=>void
 
@@ -76,7 +79,7 @@ export default (function add_post(environment, postInput, successCb){
           'PostsPagination_posts',
           {}
         );
-        ConnectionHandler?.insertEdgeBefore(postsConnection, postEdge);
+        if(postEdge && postsConnection) ConnectionHandler?.insertEdgeBefore(postsConnection, postEdge);
       }
     }
   )

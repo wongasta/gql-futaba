@@ -6,20 +6,22 @@ import type {Environment as EnvironmentType} from 'relay-runtime';
 export type PostInputType={
   user: ?string,
   post: string,
-  comment_content: ?string,
+  comment_content: string,
   image_url: ?string
 }
-export type CommentEdgeType={
-  cursor: string,
-  node: {
+export type CommentType={
     id: string,
     user: string,
     user_id: string,
     post: string,
+    title: void,
     comment_content: string,
     image_url: ?string,
     created_ts: number
-  }
+}
+export type CommentEdgeType={
+  cursor: string,
+  node: CommentType
 }
 type AddCommentPayloadType={
   commentEdge: CommentEdgeType

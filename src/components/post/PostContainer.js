@@ -1,12 +1,19 @@
-import React from "react";
+//@flow
+import * as React from "react";
 import {createFragmentContainer} from 'react-relay';
 import {Link} from "react-router-dom";
 import parse from 'html-react-parser';
 import moment from 'moment';
 import graphql from 'babel-plugin-relay/macro';
 import styles from './PostContainer.module.css';
+import type {PostType} from '../../mutations/add_post';
 
-function generateHeader({id,user_id,title,created_ts},showExpand=false){
+type Props={
+  post: PostType,
+  isPost: boolean
+}
+
+function generateHeader({id,user_id,title,created_ts},showExpand=false): React.Node{
   return (
     <p className={styles.preview_header}>
       {title?(<span className={styles.title_display}>{title} </span>):null}
@@ -17,7 +24,7 @@ function generateHeader({id,user_id,title,created_ts},showExpand=false){
   )
 }
 
-function PostContainer(props){
+function PostContainer(props: Props): React.Node{
   const {title,post_content,image_url,comments} = props.post;
   const isPost=props.isPost;
   const comment_nodes = comments.edges;
@@ -27,7 +34,7 @@ function PostContainer(props){
     commentsContainer=comment_nodes.map((edge)=> {
       const comment=edge.node;
       return (<div className={styles.comment_container} key={edge.cursor}>
-        {comment.image_url?(<img alt={comment.title} src={comment.image_url} className={styles.post_img} />):null}
+        {comment.image_url?(<img alt={comment.comment_content} src={comment.image_url} className={styles.post_img} />):null}
         {generateHeader(comment)}
         <div className={styles.content_container}>{parse(comment.comment_content)}</div>
       </div>);
@@ -43,7 +50,7 @@ function PostContainer(props){
   )
 }
 
-export default createFragmentContainer(
+export default (createFragmentContainer(
   PostContainer,
   {
     post: graphql`
@@ -71,4 +78,4 @@ export default createFragmentContainer(
       }
     `
   }
-)
+): any)
